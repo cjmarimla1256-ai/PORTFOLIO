@@ -1,7 +1,8 @@
 
 // Section Reveal Animation
 const observerOptions = {
-    threshold: 0.1
+    threshold: 0.15,
+    rootMargin: "-50px"
 };
 
 const observer = new IntersectionObserver((entries) => {
@@ -15,6 +16,16 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('section').forEach(section => {
     section.classList.add('reveal');
     observer.observe(section);
+});
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
 });
 
 // Calculator Logic (Keep existing)
