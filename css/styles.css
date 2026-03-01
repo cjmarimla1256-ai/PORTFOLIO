@@ -428,8 +428,18 @@ h2::after {
     border-color: var(--primary-accent);
 }
 
+/* Redirect Button base - will be refined in the footer/hero sections */
 .redirect-btn {
-    background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(112, 0, 255, 0.1)) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    color: #fff !important;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
 }
 
 /* Footer */
@@ -754,14 +764,15 @@ footer p {
     color: var(--primary-accent);
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     letter-spacing: 0.02em;
     transition: var(--transition);
 }
 
 .project-link:hover {
-    gap: 8px;
-    opacity: 0.8;
+    gap: 12px;
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-accent);
     transform: translateX(4px);
 }
 
@@ -866,6 +877,7 @@ footer p {
         padding: 0 40px;
     }
 }
+
 /* --- Enhanced Project Cards --- */
 .project-card {
     position: relative;
@@ -882,12 +894,14 @@ footer p {
     inset: 0;
     border-radius: 28px;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent 50%, rgba(0, 242, 255, 0.1));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(0, 242, 255, 0.1));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     opacity: 0;
     transition: var(--transition);
+    pointer-events: none;
 }
 
 .project-card:hover {
@@ -939,17 +953,7 @@ footer p {
 
 /* --- Button Refinement --- */
 .redirect-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 32px;
-    border-radius: 16px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: var(--transition);
-    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
-    color: #000 !important;
+    /* Base styles are now defined above to avoid conflicts */
     box-shadow: 0 10px 20px -5px rgba(0, 242, 255, 0.3);
 }
 
