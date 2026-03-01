@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Loading and Error States</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+        .test-section {
+            margin-bottom: 3rem;
+            border: 2px solid #ddd;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .test-controls {
+            margin-bottom: 1rem;
+        }
+        .test-controls button {
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+            background: #1f4bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .test-controls button:hover {
+            background: #1a3dd9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Loading and Error States Test</h1>
+    <p>This page tests the loading, error, and no results states for the flight schedule system.</p>
+
+    <!-- Test Loading State -->
+    <div class="test-section">
+        <h2>1. Loading State Test</h2>
+        <div class="test-controls">
+            <button onclick="showLoadingState()">Show Loading State</button>
+            <button onclick="clearTestArea('loading-test')">Clear</button>
+        </div>
+        <div id="loading-test" class="card-grid"></div>
+    </div>
+
+    <!-- Test Error State -->
+    <div class="test-section">
+        <h2>2. Error State Test</h2>
+        <div class="test-controls">
+            <button onclick="showErrorState()">Show Error State</button>
+            <button onclick="clearTestArea('error-test')">Clear</button>
+        </div>
+        <div id="error-test" class="card-grid"></div>
+    </div>
+
+    <!-- Test No Results State -->
+    <div class="test-section">
+        <h2>3. No Results State Test</h2>
+        <div class="test-controls">
+            <button onclick="showNoResultsWithSearch()">Show No Results (with search term)</button>
+            <button onclick="showNoResultsWithoutSearch()">Show No Results (without search term)</button>
+            <button onclick="clearTestArea('no-results-test')">Clear</button>
+        </div>
+        <div id="no-results-test" class="card-grid"></div>
+    </div>
+
+    <!-- Test ARIA Attributes -->
+    <div class="test-section">
+        <h2>4. Accessibility Test</h2>
+        <p>Check the browser console for ARIA attribute verification.</p>
+        <div class="test-controls">
+            <button onclick="testAccessibility()">Test ARIA Attributes</button>
+        </div>
+        <div id="aria-test-results"></div>
+    </div>
+
+    <!-- Include JavaScript modules -->
+    <script src="js/utils.js"></script>
+    <script src="js/ui-components.js"></script>
+
+    <script>
+        // Test functions
+        function showLoadingState() {
+            const container = document.getElementById('loading-test');
+            container.innerHTML = renderLoadingState();
+        }
+
+        function showErrorState() {
+            const container = document.getElementById('error-test');
+            container.innerHTML = renderErrorState('We\'re having trouble loading flight information. Please try again.');
+        }
+
+        function showNoResultsWithSearch() {
+            const container = document.getElementById('no-results-test');
+            container.innerHTML = renderNoResults('Tokyo');
+        }
+
+        function showNoResultsWithoutSearch() {
+            const container = document.getElementById('no-results-test');
+            container.innerHTML = renderNoResults('');
+        }
+
+        function clearTestArea(id) {
+            const container = document.getElementById(id);
+            container.innerHTML = '';
+        }
+
+        function clearSearchFromNoResults() {
+            alert('Clear search button clicked! In the real app, this would clear the search input.');
+        }
+
+        function testAccessibility() {
+            const results = document.getElementById('aria-test-results');
+            let report = '<h3>ARIA Attribute Test Results:</h3><ul>';
+
+            // Test loading state
+            const loadingHTML = renderLoadingState();
+            const loadingDiv = document.createElement('div');
+            loadingDiv.innerHTML = loadingHTML;
+            
+            const loadingContainer = loadingDiv.querySelector('.loading-container');
+            report += '<li><strong>Loading State:</strong>';
+            report += loadingContainer.getAttribute('role') === 'status' ? ' ✓ Has role="status"' : ' ✗ Missing role="status"';
+            report += loadingContainer.getAttribute('aria-live') === 'polite' ? ' ✓ Has aria-live="polite"' : ' ✗ Missing aria-live="polite"';
+            report += '</li>';
+
+            // Test error state
+            const errorHTML = renderErrorState('Test error');
+            const errorDiv = document.createElement('div');
+            errorDiv.innerHTML = errorHTML;
+            
+            const errorContainer = errorDiv.querySelector('.error-container');
+            report += '<li><strong>Error State:</strong>';
+            report += errorContainer.getAttribute('role') === 'alert' ? ' ✓ Has role="alert"' : ' ✗ Missing role="alert"';
+            
+            const retryButton = errorDiv.querySelector('.retry-button');
+            report += retryButton ? ' ✓ Has retry button' : ' ✗ Missing retry button';
+            report += '</li>';
+
+            // Test no results state
+            const noResultsHTML = renderNoResults('test');
+            const noResultsDiv = document.createElement('div');
+            noResultsDiv.innerHTML = noResultsHTML;
+            
+            const noResultsContainer = noResultsDiv.querySelector('.no-results');
+            report += '<li><strong>No Results State:</strong>';
+            report += noResultsContainer.getAttribute('role') === 'status' ? ' ✓ Has role="status"' : ' ✗ Missing role="status"';
+            
+            const clearButton = noResultsDiv.querySelector('button');
+            report += clearButton ? ' ✓ Has clear search button' : ' ✗ Missing clear search button';
+            report += '</li>';
+
+            report += '</ul>';
+            results.innerHTML = report;
+
+            console.log('=== ARIA Accessibility Test ===');
+            console.log('Loading State HTML:', loadingHTML);
+            console.log('Error State HTML:', errorHTML);
+            console.log('No Results State HTML:', noResultsHTML);
+        }
+
+        // Auto-run accessibility test on page load
+        window.addEventListener('load', () => {
+            console.log('Test page loaded. Click buttons to test different states.');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design Test - Flight Schedule</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(31, 75, 255, 0.9);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .test-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+            color: white;
+        }
+        .test-info p {
+            margin: 0.25rem 0;
+        }
+        .breakpoint-indicator {
+            font-weight: bold;
+            font-size: 1.125rem;
+            color: #ffd700;
+        }
+        .test-instructions {
+            background: #f0f4f8;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border-left: 4px solid #1f4bff;
+        }
+        .test-instructions h2 {
+            margin-top: 0;
+            color: #1f4bff;
+        }
+        .test-instructions ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+        .test-instructions li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Breakpoint Indicator -->
+    <div class="test-info">
+        <h3>Responsive Test Info</h3>
+        <p>Viewport: <span id="viewport-width">0</span>px × <span id="viewport-height">0</span>px</p>
+        <p class="breakpoint-indicator" id="breakpoint">Loading...</p>
+        <p>Touch Target: <span id="touch-target-check">Checking...</span></p>
+    </div>
+
+    <!-- Test Instructions -->
+    <div class="container">
+        <div class="test-instructions">
+            <h2>📱 Responsive Design Testing Guide</h2>
+            <p><strong>Requirements being tested:</strong> 5.1, 5.2, 5.3, 5.4, 5.5, 5.6</p>
+            
+            <h3>Test Procedure:</h3>
+            <ul>
+                <li><strong>Mobile (< 768px):</strong> Resize browser to 375px, 414px, 767px widths
+                    <ul>
+                        <li>✓ Single column layout</li>
+                        <li>✓ Touch targets ≥ 44×44px (buttons, inputs)</li>
+                        <li>✓ Text size ≥ 16px (prevents iOS zoom)</li>
+                        <li>✓ Images scale proportionally</li>
+                        <li>✓ No horizontal scrolling</li>
+                    </ul>
+                </li>
+                <li><strong>Tablet (768px - 1024px):</strong> Resize to 768px, 834px, 1024px widths
+                    <ul>
+                        <li>✓ Two column grid layout</li>
+                        <li>✓ Balanced spacing</li>
+                        <li>✓ Readable text sizes</li>
+                        <li>✓ Images scale without distortion</li>
+                    </ul>
+                </li>
+                <li><strong>Desktop (> 1024px):</strong> Resize to 1280px, 1440px, 1920px widths
+                    <ul>
+                        <li>✓ Auto-fit grid (min 320px columns)</li>
+                        <li>✓ Maximum content width (1600px)</li>
+                        <li>✓ Proper whitespace usage</li>
+                        <li>✓ Smooth transitions between breakpoints</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Browser DevTools Testing:</h3>
+            <ul>
+                <li>Open DevTools (F12 or Cmd+Option+I)</li>
+                <li>Toggle device toolbar (Ctrl+Shift+M or Cmd+Shift+M)</li>
+                <li>Test common devices: iPhone SE, iPhone 12 Pro, iPad, iPad Pro, Desktop</li>
+                <li>Verify touch targets using "Show rulers" option</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>✈️ Flight Schedule - Responsive Test</h1>
+        <p>Testing responsive design across mobile, tablet, and desktop breakpoints</p>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-wrapper">
+                <span class="search-icon" aria-hidden="true">🔍</span>
+                <input 
+                    type="search" 
+                    class="search-input" 
+                    placeholder="Search by destination, airline, or flight number..."
+                    aria-label="Search flights by destination, airline, or flight number"
+                >
+                <button class="search-clear" aria-label="Clear search">×</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Controls Section -->
+    <div class="controls-container">
+        <div class="sort-wrapper">
+            <label class="sort-label" for="sort-select">Sort by:</label>
+            <select id="sort-select" class="sort-select" aria-label="Sort flights by">
+                <option value="departure">Departure Time</option>
+                <option value="arrival">Arrival Time</option>
+                <option value="duration">Duration</option>
+                <option value="destination">Destination</option>
+            </select>
+            <button class="sort-order-btn" aria-label="Toggle sort order">↕</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- International Flights Section -->
+        <section class="header-section">
+            <h2>International Departures</h2>
+        </section>
+
+        <div class="card-grid">
+            <!-- Sample Flight Card 1 -->
+            <article class="flight-card" role="article">
+                <div class="status-indicator status-on-time" role="status">
+                    <span class="status-icon" aria-hidden="true">✓</span>
+                    <span class="status-text">On Time</span>
+                </div>
+                <img src="img/tokyo.jpg" alt="Tokyo skyline with Mount Fuji" loading="lazy">
+                <div class="card-section">
+                    <div class="flight-route">
+                        <span>MNL</span>
+                        <span class="flight-route-arrow" aria-hidden="true">→</span>
+                        <span>NRT</span>
+                    </div>
+                    <h2>Manila to Tokyo</h2>
+                    <div class="flight-details">
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Flight</span>
+                            <span class="flight-detail-value">PR 432</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Airline</span>
+                            <span class="flight-detail-value">Philippine Airlines</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Departure</span>
+                            <span class="flight-detail-value">10:30 AM PST</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Duration</span>
+                            <span class="flight-detail-value">4h 30m</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sample Flight Card 2 -->
+            <article class="flight-card" role="article">
+                <div class="status-indicator status-delayed" role="status">
+                    <span class="status-icon" aria-hidden="true">⏱</span>
+                    <span class="status-text">Delayed</span>
+                    <span class="delay-duration">(45 min)</span>
+                </div>
+                <img src="img/singapore.jpg" alt="Singapore Marina Bay skyline" loading="lazy">
+                <div class="card-section">
+                    <div class="flight-route">
+                        <span>MNL</span>
+                        <span class="flight-route-arrow" aria-hidden="true">→</span>
+                        <span>SIN</span>
+                    </div>
+                    <h2>Manila to Singapore</h2>
+                    <div class="flight-details">
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Flight</span>
+                            <span class="flight-detail-value">SQ 918</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Airline</span>
+                            <span class="flight-detail-value">Singapore Airlines</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Departure</span>
+                            <span class="flight-detail-value">2:15 PM PST</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Duration</span>
+                            <span class="flight-detail-value">3h 45m</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sample Flight Card 3 -->
+            <article class="flight-card" role="article">
+                <div class="status-indicator status-boarding" role="status">
+                    <span class="status-icon" aria-hidden="true">✈</span>
+                    <span class="status-text">Boarding</span>
+                </div>
+                <img src="img/hongkong.jpg" alt="Hong Kong Victoria Harbor" loading="lazy">
+                <div class="card-section">
+                    <div class="flight-route">
+                        <span>MNL</span>
+                        <span class="flight-route-arrow" aria-hidden="true">→</span>
+                        <span>HKG</span>
+                    </div>
+                    <h2>Manila to Hong Kong</h2>
+                    <div class="flight-details">
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Flight</span>
+                            <span class="flight-detail-value">CX 906</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Airline</span>
+                            <span class="flight-detail-value">Cathay Pacific</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Departure</span>
+                            <span class="flight-detail-value">6:45 PM PST</span>
+                        </div>
+                        <div class="flight-detail-row">
+                            <span class="flight-detail-label">Duration</span>
+                            <span class="flight-detail-value">2h 15m</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Flight Schedule System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Update viewport dimensions and breakpoint indicator
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            document.getElementById('viewport-width').textContent = width;
+            document.getElementById('viewport-height').textContent = height;
+            
+            let breakpoint = '';
+            if (width < 768) {
+                breakpoint = '📱 Mobile (< 768px)';
+            } else if (width >= 768 && width <= 1024) {
+                breakpoint = '📱 Tablet (768px - 1024px)';
+            } else {
+                breakpoint = '🖥️ Desktop (> 1024px)';
+            }
+            document.getElementById('breakpoint').textContent = breakpoint;
+            
+            // Check touch target sizes
+            checkTouchTargets();
+        }
+        
+        function checkTouchTargets() {
+            const buttons = document.querySelectorAll('button, input, select, .flight-card');
+            let allValid = true;
+            let minSize = Infinity;
+            
+            buttons.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const minDimension = Math.min(rect.width, rect.height);
+                if (minDimension < minSize) {
+                    minSize = minDimension;
+                }
+                if (minDimension < 44 && window.innerWidth < 768) {
+                    allValid = false;
+                }
+            });
+            
+            const checkEl = document.getElementById('touch-target-check');
+            if (window.innerWidth < 768) {
+                if (allValid) {
+                    checkEl.textContent = '✓ All ≥ 44px';
+                    checkEl.style.color = '#90EE90';
+                } else {
+                    checkEl.textContent = `✗ Min: ${Math.round(minSize)}px`;
+                    checkEl.style.color = '#FFB6C1';
+                }
+            } else {
+                checkEl.textContent = 'N/A (Desktop)';
+                checkEl.style.color = '#FFF';
+            }
+        }
+        
+        // Update on load and resize
+        window.addEventListener('load', updateViewportInfo);
+        window.addEventListener('resize', updateViewportInfo);
+        
+        // Remove preload class after page loads to enable transitions
+        window.addEventListener('load', () => {
+            document.body.classList.remove('preload');
+        });
+        
+        // Add preload class initially
+        document.body.classList.add('preload');
+    </script>
+</body>
+</html>

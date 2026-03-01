@@ -1,0 +1,370 @@
+/* ============================================
+   Responsive Layout System
+   Requirements: 5.1, 5.2, 5.3, 5.4
+   ============================================ */
+
+/* ============================================
+   Container and Main Layout
+   ============================================ */
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+main {
+    min-height: calc(100vh - 200px);
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100%;
+}
+
+/* ============================================
+   Page Header Layout
+   ============================================ */
+
+.page-header {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background: linear-gradient(180deg, var(--color-surface), #f7f9fc);
+    border-bottom: 4px solid var(--color-border-accent);
+}
+
+.page-header h1 {
+    margin: 0;
+    color: var(--color-primary);
+    letter-spacing: 0.6px;
+}
+
+.page-header p {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-size-large);
+    color: var(--color-text-secondary);
+}
+
+/* ============================================
+   Section Headers
+   ============================================ */
+
+.search-section {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background: linear-gradient(180deg, #f7f9fc, var(--color-surface));
+    border-bottom: 1px solid var(--color-border);
+}
+
+.search-section .search-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header-section {
+    text-align: center;
+    padding-bottom: var(--spacing-md);
+    margin: var(--spacing-2xl) 0 var(--spacing-xl);
+    border-bottom: 3px solid var(--color-border-accent);
+}
+
+.header-section h1,
+.header-section h2 {
+    margin: 0;
+    color: var(--color-text-primary);
+}
+
+/* ============================================
+   Card Grid System - Mobile First
+   ============================================ */
+
+.card-grid {
+    display: grid;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+/* Mobile: Single column layout (< 768px) */
+/* Requirements: 5.1, 5.4, 5.5, 5.6 */
+@media (max-width: 767px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .search-section {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .page-header {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .page-header h1 {
+        font-size: 1.75rem;
+        line-height: 1.3;
+    }
+    
+    .page-header p {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    .header-section {
+        margin: var(--spacing-xl) 0 var(--spacing-lg);
+    }
+    
+    .header-section h2 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    
+    /* Ensure readable text sizes on mobile */
+    body {
+        font-size: 16px; /* Prevent iOS zoom on input focus */
+    }
+}
+
+/* Tablet: Two column layout (768px - 1024px) */
+/* Requirements: 5.2, 5.4, 5.5 */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xl);
+        padding: var(--spacing-2xl) var(--spacing-lg);
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .page-header p {
+        font-size: 1.125rem;
+        line-height: 1.5;
+    }
+    
+    .header-section h2 {
+        font-size: 1.75rem;
+        line-height: 1.3;
+    }
+    
+    /* Balanced spacing for tablet */
+    .search-section {
+        padding: var(--spacing-2xl) var(--spacing-xl);
+    }
+    
+    .controls-container {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+}
+
+/* Desktop: Auto-fit grid (> 1024px) */
+/* Requirements: 5.3, 5.4, 5.5 */
+@media (min-width: 1025px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--spacing-2xl);
+        padding: var(--spacing-2xl) var(--spacing-3xl);
+        max-width: 1600px; /* Maximum content width for readability */
+        margin: 0 auto;
+    }
+    
+    /* Proper use of whitespace */
+    .page-header {
+        padding: var(--spacing-3xl) var(--spacing-2xl);
+    }
+    
+    .page-header h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .page-header p {
+        font-size: 1.25rem;
+        line-height: 1.5;
+        max-width: 800px;
+        margin: var(--spacing-md) auto 0;
+    }
+    
+    .header-section {
+        max-width: 1600px;
+        margin: var(--spacing-3xl) auto var(--spacing-2xl);
+    }
+    
+    .header-section h2 {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    /* Search section with maximum width */
+    .search-section {
+        padding: var(--spacing-3xl) var(--spacing-2xl);
+    }
+    
+    .search-section .search-container {
+        max-width: 700px;
+    }
+    
+    /* Controls container with proper spacing */
+    .controls-container {
+        padding: var(--spacing-2xl) var(--spacing-3xl);
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+}
+
+/* ============================================
+   Controls Layout (Search and Sort)
+   ============================================ */
+
+.controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.search-wrapper {
+    flex: 1 1 300px;
+    max-width: 500px;
+}
+
+.sort-wrapper {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Mobile controls layout */
+@media (max-width: 767px) {
+    .controls-container {
+        flex-direction: column;
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .search-wrapper {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .sort-wrapper {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ============================================
+   Footer Layout
+   ============================================ */
+
+.footer {
+    background-color: #0e0e0e;
+    color: #ffffff;
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    margin-top: var(--spacing-3xl);
+}
+
+.footer p {
+    margin: 0;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-normal);
+    opacity: 0.85;
+}
+
+/* ============================================
+   Loading and Error State Layouts
+   ============================================ */
+
+.loading-container,
+.error-container,
+.no-results {
+    text-align: center;
+    padding: var(--spacing-3xl) var(--spacing-lg);
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.error-container {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-xl) auto;
+    max-width: 600px;
+    box-shadow: var(--shadow-md);
+}
+
+.no-results {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-xl) auto;
+    max-width: 500px;
+    padding: var(--spacing-2xl);
+}
+
+/* ============================================
+   Flexbox Utilities
+   ============================================ */
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.gap-sm {
+    gap: var(--spacing-sm);
+}
+
+.gap-md {
+    gap: var(--spacing-md);
+}
+
+.gap-lg {
+    gap: var(--spacing-lg);
+}
+
+/* ============================================
+   Spacing Utilities
+   ============================================ */
+
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }

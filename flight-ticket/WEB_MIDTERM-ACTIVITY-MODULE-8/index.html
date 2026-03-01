@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Schedule</title>
+    <link rel="stylesheet" href="css/base.min.css">
+    <link rel="stylesheet" href="css/layout.min.css">
+    <link rel="stylesheet" href="css/components.min.css">
+    <link rel="stylesheet" href="css/print.min.css" media="print">
+</head>
+
+<body>
+
+    <header class="page-header">
+        <h1>Flight Schedule System</h1>
+        <p id="currentDateTime"></p>
+    </header>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long', year: 'numeric', month: 'long',
+                day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: true
+            };
+            const manilaTime = now.toLocaleString('en-PH', { ...options, timeZone: 'Asia/Manila' });
+            document.getElementById('currentDateTime').textContent = manilaTime;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+    <!-- Search and Filter Section -->
+    <section class="search-section" aria-label="Search flights">
+        <div class="search-container">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="search" id="flight-search" class="search-input"
+                placeholder="Search by destination, airline, or flight number..."
+                aria-label="Search flights by destination, airline, or flight number" role="searchbox"
+                autocomplete="off" aria-describedby="search-results-status">
+            <button class="search-clear" id="search-clear-btn" aria-label="Clear search" type="button">✕</button>
+        </div>
+
+        <div id="search-results-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+        <div class="sort-controls">
+            <label for="sort-by" class="sort-label">Sort by:</label>
+            <select id="sort-by" class="sort-select" aria-label="Sort flights by"
+                aria-controls="international-flights domestic-flights">
+                <option value="departure" selected>Departure Time</option>
+                <option value="arrival">Arrival Time</option>
+                <option value="duration">Duration</option>
+                <option value="destination">Destination</option>
+            </select>
+
+            <button id="sort-order-toggle" class="sort-order-btn"
+                aria-label="Toggle sort order between ascending and descending" aria-pressed="false"
+                title="Sort order: Ascending">
+                <span class="sort-icon" aria-hidden="true">↑</span>
+                <span class="sort-order-text">Ascending</span>
+            </button>
+        </div>
+    </section>
+
+    <main role="main">
+        <section aria-labelledby="international-heading">
+            <h1 id="international-heading">International Departures</h1>
+            <div class="card-grid" id="international-flights" role="list" aria-live="polite" aria-atomic="false">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <section aria-labelledby="domestic-heading">
+            <h1 id="domestic-heading">Domestic Departures</h1>
+            <div class="card-grid" id="domestic-flights" role="list" aria-live="polite" aria-atomic="false">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.flightData = {
+            international: [
+                {
+                    "id": "INT001",
+                    "img": "img/tokyo.jpg",
+                    "from": "MNL",
+                    "to": "TKO",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Tokyo, Japan",
+                    "flightNo": "PR 2831",
+                    "airline": "Philippine Airlines (PAL)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Tokyo",
+                    "departure": "2026-01-22 10:00:00",
+                    "duration": 240,
+                    "status": "on-time",
+                    "delayMinutes": null
+                },
+                {
+                    "id": "INT002",
+                    "img": "img/hanoi.jpg",
+                    "from": "MNL",
+                    "to": "HAN",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Hanoi, Vietnam",
+                    "flightNo": "PR 1927",
+                    "airline": "Cathay Pacific (CATHAY)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Bangkok",
+                    "departure": "2026-01-22 11:30:00",
+                    "duration": 210,
+                    "status": "delayed",
+                    "delayMinutes": 45
+                },
+                {
+                    "id": "INT003",
+                    "img": "img/amsterdam.jpg",
+                    "from": "MNL",
+                    "to": "AMS",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Amsterdam, Netherlands",
+                    "flightNo": "PR 2106",
+                    "airline": "Etihad Airways (ETH)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Europe/Amsterdam",
+                    "departure": "2026-01-22 08:00:00",
+                    "duration": 1020,
+                    "status": "boarding",
+                    "delayMinutes": null
+                },
+                {
+                    "id": "INT004",
+                    "img": "img/geneva.jpg",
+                    "from": "MNL",
+                    "to": "GVA",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Geneva, Switzerland",
+                    "flightNo": "PR 1962",
+                    "airline": "Emirates (EK)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Europe/Zurich",
+                    "departure": "2026-01-22 08:00:00",
+                    "duration": 1300,
+                    "status": "on-time",
+                    "delayMinutes": null
+                },
+                {
+                    "id": "INT005",
+                    "img": "img/milan.jpg",
+                    "from": "MNL",
+                    "to": "MXP",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Milan, Italy",
+                    "flightNo": "PR 1968",
+                    "airline": "Qantas Airlines (QF)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Europe/Rome",
+                    "departure": "2026-01-22 08:00:00",
+                    "duration": 1030,
+                    "status": "cancelled",
+                    "delayMinutes": null
+                }
+            ],
+            domestic: [
+                {
+                    "id": "DOM001",
+                    "img": "img/siargao.jpg",
+                    "from": "MNL",
+                    "to": "IAO",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Siargao, Philippines",
+                    "flightNo": "DF 2387",
+                    "airline": "Cebu Pacific (CEB)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Manila",
+                    "departure": "2026-01-22 08:00:00",
+                    "duration": 120,
+                    "status": "on-time",
+                    "delayMinutes": null
+                },
+                {
+                    "id": "DOM002",
+                    "img": "img/cebu.jpg",
+                    "from": "MNL",
+                    "to": "CEB",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Cebu, Philippines",
+                    "flightNo": "DF 2388",
+                    "airline": "Cebu Pacific (CEB)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Manila",
+                    "departure": "2026-01-22 09:00:00",
+                    "duration": 80,
+                    "status": "boarding",
+                    "delayMinutes": null
+                },
+                {
+                    "id": "DOM003",
+                    "img": "img/palawan.jpg",
+                    "from": "MNL",
+                    "to": "PLW",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Palawan, Philippines",
+                    "flightNo": "DF 2389",
+                    "airline": "Jetstar(JST)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Manila",
+                    "departure": "2026-01-22 10:00:00",
+                    "duration": 90,
+                    "status": "delayed",
+                    "delayMinutes": 30
+                },
+                {
+                    "id": "DOM004",
+                    "img": "img/bohol.jpg",
+                    "from": "MNL",
+                    "to": "BOH",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Bohol, Philippines",
+                    "flightNo": "DF 2390",
+                    "airline": "Philippine Airlines (PAL)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Manila",
+                    "departure": "2026-01-22 10:00:00",
+                    "duration": 80,
+                    "status": "on-time",
+                    "delayMinutes": null
+                },
+                {
+                    "id": "DOM005",
+                    "img": "img/boracay.jpg",
+                    "from": "MNL",
+                    "to": "BOR",
+                    "fromCity": "Manila, Philippines",
+                    "toCity": "Boracay, Philippines",
+                    "flightNo": "DF 2391",
+                    "airline": "Philippine Airlines (PAL)",
+                    "originTZ": "Asia/Manila",
+                    "destTZ": "Asia/Manila",
+                    "departure": "2026-01-22 10:00:00",
+                    "duration": 85,
+                    "status": "on-time",
+                    "delayMinutes": null
+                }
+            ]
+        };
+    </script>
+
+    <script src="js/utils.min.js"></script>
+    <script src="js/ui-components.min.js"></script>
+    <script src="js/flight-manager.min.js"></script>
+
+    <script>
+        function logError(error, context = '') {
+            console.error('[Flight Schedule Error]', { context, message: error.message || error });
+        }
+
+        function validateFlightData(data) {
+            if (!data || !data.international || !data.domestic) throw new Error('Invalid flight data');
+            return true;
+        }
+
+        function initializeApp() {
+            try {
+                validateFlightData(window.flightData);
+                const flightManager = new FlightManager(window.flightData.international, window.flightData.domestic);
+                flightManager.updateDisplay('international-flights', 'domestic-flights');
+                return flightManager;
+            } catch (error) {
+                logError(error, 'App Initialization');
+                return null;
+            }
+        }
+
+        const flightManager = initializeApp();
+        if (typeof initializeLazyLoading === 'function') initializeLazyLoading();
+
+        if (flightManager) {
+            setupEventHandlers(flightManager);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        function setupEventHandlers(flightManager) {
+            const searchInput = document.getElementById('flight-search');
+            const searchClearBtn = document.getElementById('search-clear-btn');
+            const sortBySelect = document.getElementById('sort-by');
+            const sortOrderBtn = document.getElementById('sort-order-toggle');
+
+            const performSearch = debounce((searchTerm) => {
+                flightManager.filterFlights(searchTerm, 'both');
+                flightManager.updateDisplay('international-flights', 'domestic-flights');
+                if (searchTerm.trim()) searchClearBtn.classList.add('visible');
+                else searchClearBtn.classList.remove('visible');
+            }, 300);
+
+            searchInput.addEventListener('input', (e) => performSearch(e.target.value));
+            searchClearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                performSearch('');
+            });
+
+            sortBySelect.addEventListener('change', (e) => {
+                flightManager.sortFlights(e.target.value, document.getElementById('sort-order-toggle').getAttribute('aria-pressed') === 'true' ? 'desc' : 'asc');
+                flightManager.updateDisplay('international-flights', 'domestic-flights');
+            });
+
+            sortOrderBtn.addEventListener('click', () => {
+                const isDesc = sortOrderBtn.getAttribute('aria-pressed') === 'true';
+                const newOrder = isDesc ? 'asc' : 'desc';
+                sortOrderBtn.setAttribute('aria-pressed', !isDesc);
+                sortOrderBtn.querySelector('.sort-icon').textContent = newOrder === 'desc' ? '↓' : '↑';
+                sortOrderBtn.querySelector('.sort-order-text').textContent = newOrder === 'desc' ? 'Descending' : 'Ascending';
+                flightManager.sortFlights(sortBySelect.value, newOrder);
+                flightManager.updateDisplay('international-flights', 'domestic-flights');
+            });
+        }
+    </script>
+
+    <footer class="footer">
+        <p>
+            © 2026 Flight Schedule System<br>
+            Marimla, Chleo Jae G. | CYB-201
+        </p>
+    </footer>
+
+</body>
+
+</html>
