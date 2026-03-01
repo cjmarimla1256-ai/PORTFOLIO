@@ -1,0 +1,664 @@
+.page {
+    min-height: calc(100vh - 200px);
+}
+
+/* Logged Out Home - Hero Section */
+.hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.heroMainTitle {
+    font-size: 8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.searchContainer {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.searchBar {
+    width: 100%;
+    height: 60px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    gap: 1rem;
+}
+
+.searchIcon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+    color: #333;
+}
+
+.searchInput::placeholder {
+    color: #8d8d8d;
+    font-weight: 500;
+}
+
+.searchSuggestions {
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Sub-Hero Section */
+.subHero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 6rem 4rem;
+    gap: 4rem;
+    align-items: center;
+}
+
+.subHeroLeft {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.triangleGraphic {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 80px solid var(--color-primary);
+    transform: rotate(-5deg);
+    flex-shrink: 0;
+}
+
+.buildText {
+    display: flex;
+    flex-direction: column;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: lowercase;
+    letter-spacing: -0.05em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.subHeroRight {
+    max-width: 600px;
+}
+
+.subHeroTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.subHeroDescription {
+    font-size: 1.1rem;
+    color: var(--color-text-dim);
+    line-height: 1.6;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Team Sections */
+.teamSections {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    padding: 4rem 0;
+}
+
+.teamCard {
+    min-height: 80vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8rem 0;
+    border-radius: 60px;
+    margin: 0 4rem;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+}
+
+.teamBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.3);
+    z-index: 1;
+}
+
+.teamLink {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.teamContent {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teamFocalWrapper {
+    width: 60%;
+    max-width: 800px;
+    height: 450px;
+    border: 2px solid var(--color-primary);
+    border-radius: 40px 40px 0 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 190, 30, 0.2);
+}
+
+.teamFocalImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.teamLabels {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.teamLabelLeft,
+.teamLabelRight {
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+}
+
+/* Logged In Home - Dashboard */
+.dashboard {
+    padding: 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboardHeader {
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcomeTitle {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.5rem;
+}
+
+.welcomeSubtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.statCard {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s;
+}
+
+.statCard:hover {
+    border-color: rgba(245, 190, 30, 0.3);
+    transform: translateY(-4px);
+}
+
+.statIcon {
+    font-size: 3rem;
+}
+
+.statContent {
+    flex: 1;
+}
+
+.statLabel {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 0.5rem;
+}
+
+.statValue {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f5be1e;
+    margin: 0;
+}
+
+.progressCard .statValue {
+    margin-bottom: 0.75rem;
+}
+
+.sectionHeading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1.5rem;
+}
+
+.quickActions {
+    margin-bottom: 3rem;
+}
+
+.actionGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.actionCard {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.actionCard:hover {
+    border-color: #f5be1e;
+    background-color: rgba(245, 190, 30, 0.05);
+    transform: translateY(-4px);
+}
+
+.actionIcon {
+    font-size: 3rem;
+}
+
+.actionText {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.upcomingSection {
+    margin-top: 3rem;
+}
+
+.tasksList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.taskItem {
+    background-color: #1a1a1a;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.taskItem:hover {
+    border-color: rgba(245, 190, 30, 0.3);
+}
+
+.taskDate {
+    background-color: #f5be1e;
+    color: #000000;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-align: center;
+    min-width: 80px;
+}
+
+.taskDetails {
+    flex: 1;
+}
+
+.taskDetails h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 0.25rem;
+}
+
+.taskDetails p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.taskStatus {
+    min-width: 100px;
+    text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .subHero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 4rem 2rem;
+        gap: 3rem;
+    }
+
+    .subHeroLeft {
+        justify-content: center;
+    }
+
+    .heroMainTitle {
+        font-size: 6rem;
+    }
+
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .actionGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard {
+        padding: 2rem;
+    }
+
+    .hero {
+        padding: 3rem 2rem;
+    }
+
+    .teamCard {
+        margin: 0 2rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero,
+    .dashboard {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .heroMainTitle {
+        font-size: 5rem;
+    }
+
+    .tagline {
+        font-size: 1.25rem;
+    }
+
+    .subHero {
+        padding: 3rem 2rem;
+        gap: 2rem;
+    }
+
+    .buildText {
+        font-size: 3rem;
+    }
+
+    .teamCard {
+        min-height: 60vh;
+        padding: 4rem 0;
+        margin: 0 1rem;
+    }
+
+    .teamFocalWrapper {
+        width: 70%;
+        height: 350px;
+    }
+
+    .welcomeTitle {
+        font-size: 2rem;
+    }
+
+    .teamFocalImg {
+        font-size: 36px;
+    }
+
+    .teamLabelLeft,
+    .teamLabelRight {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero,
+    .dashboard {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .heroMainTitle {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .searchBar {
+        height: 50px;
+        padding: 0 1rem;
+    }
+
+    .searchInput {
+        font-size: 0.9rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    .subHero {
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+    }
+
+    .triangleGraphic {
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 60px solid var(--color-primary);
+    }
+
+    .buildText {
+        font-size: 2.5rem;
+    }
+
+    .subHeroTitle {
+        font-size: 1.25rem;
+    }
+
+    .subHeroDescription {
+        font-size: 1rem;
+    }
+
+    .teamSections {
+        padding: 2rem 1rem;
+        gap: 2rem;
+    }
+
+    .teamCard {
+        min-height: 50vh;
+        padding: 2rem 0;
+        margin: 0;
+        border-radius: 30px;
+    }
+
+    .teamFocalWrapper {
+        width: 90%;
+        height: 250px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .teamLabels {
+        font-size: 1.25rem;
+        margin-top: 1rem;
+    }
+
+    .actionGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcomeTitle {
+        font-size: 1.5rem;
+    }
+
+    .statValue {
+        font-size: 2rem;
+    }
+
+    .taskItem {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .taskStatus {
+        text-align: left;
+    }
+
+    .dashboardHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .teamContent {
+        min-height: 250px;
+        padding: 1.5rem;
+    }
+
+    .teamFocalImg {
+        font-size: 28px;
+    }
+
+    .teamLabelLeft,
+    .teamLabelRight {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heroMainTitle {
+        font-size: 2.5rem;
+    }
+
+    .buildText {
+        font-size: 2rem;
+    }
+
+    .teamFocalWrapper {
+        height: 200px;
+    }
+
+    .teamLabels {
+        font-size: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .welcomeTitle {
+        font-size: 1.25rem;
+    }
+
+    .sectionHeading {
+        font-size: 1.5rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+
+    .teamContent {
+        min-height: 200px;
+        padding: 1rem;
+    }
+
+    .teamFocalImg {
+        font-size: 24px;
+    }
+
+    .teamLabelLeft,
+    .teamLabelRight {
+        font-size: 14px;
+    }
+
+    .triangleGraphic {
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 60px solid #f5be1e;
+    }
+}

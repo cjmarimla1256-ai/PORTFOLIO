@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Movie Theater Ticket System | Chleo's Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Movie Theater Ticket Management System — A Python console application by Chleo Jae G. Marimla, Team Leader.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        :root {
+            --accent: #ff6060;
+            --accent-dim: rgba(255, 96, 96, 0.15);
+            --accent-glow: rgba(255, 96, 96, 0.3);
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .proj-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 20% 30%, rgba(255, 96, 96, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 80% 70%, rgba(112, 0, 255, 0.10) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        .hero-grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+        }
+
+        .proj-hero .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 140px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: var(--transition);
+            margin-bottom: 48px;
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 50px;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .proj-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent-glow);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 28px;
+        }
+
+        .proj-hero h1 {
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            background: linear-gradient(150deg, #ffffff 40%, #909099);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 800px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .proj-hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.15s backwards;
+        }
+
+        .proj-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            animation: fadeInUp 0.8s ease-out 0.25s backwards;
+        }
+
+        .proj-meta-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 9px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .proj-meta-pill i {
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        /* ── Stats Bar ── */
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 40px 0;
+        }
+
+        .stats-inner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .stat-block {
+            text-align: center;
+            padding: 20px;
+            border-right: 1px solid var(--glass-border);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .stat-block:last-child {
+            border-right: none;
+        }
+
+        .stat-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ── Section Commons ── */
+        .proj-section {
+            padding: 100px 0;
+        }
+
+        .section-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .proj-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .proj-section h2::after {
+            display: none;
+        }
+
+        /* ── Role Highlight ── */
+        .role-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .role-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .role-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .role-tag {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent-glow);
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .responsibility-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .resp-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .resp-item:hover {
+            border-color: var(--accent-glow);
+            background: var(--accent-dim);
+        }
+
+        .resp-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .resp-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .resp-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ── Terminal Demo ── */
+        .terminal-wrapper {
+            background: #0c0e13;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        .terminal-topbar {
+            background: #181a22;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.r {
+            background: #ff5f57;
+        }
+
+        .dot.y {
+            background: #febc2e;
+        }
+
+        .dot.g {
+            background: #28c840;
+        }
+
+        .terminal-fname {
+            margin-left: 14px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-body {
+            padding: 30px 36px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            line-height: 1.95;
+            color: #c9d1d9;
+            min-height: 420px;
+            overflow-x: auto;
+        }
+
+        .t-g {
+            color: #56d364;
+        }
+
+        .t-c {
+            color: #79c0ff;
+        }
+
+        .t-y {
+            color: #e3b341;
+        }
+
+        .t-r {
+            color: #ff7b72;
+        }
+
+        .t-m {
+            color: #d2a8ff;
+        }
+
+        .t-d {
+            color: rgba(255, 255, 255, 0.28);
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0
+            }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: #56d364;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        /* ── Features Grid ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .feat-card {
+            padding: 28px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feat-card:hover {
+            border-color: var(--accent-glow);
+            transform: translateY(-6px);
+            background: var(--accent-dim);
+        }
+
+        .feat-card:hover::before {
+            opacity: 1;
+        }
+
+        .feat-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        .feat-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .feat-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ── Tech Stack Pills ── */
+        .stack-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .stack-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .stack-pill:hover {
+            border-color: var(--accent-glow);
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .stack-pill i {
+            color: var(--accent);
+        }
+
+        /* ── Reveal Animation ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .role-split {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-block:nth-child(2) {
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo"><a href="index.html">Chleo</a></div>
+            <nav>
+                <a href="index.html#about">About</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ── Hero ── -->
+        <section class="proj-hero">
+            <div class="hero-bg"></div>
+            <div class="hero-grid-lines"></div>
+            <div class="container">
+                <a href="index.html#projects" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+                <div class="proj-eyebrow">
+                    <i class="fab fa-python"></i> Python Project
+                </div>
+                <h1>Movie Theater Ticket<br>Management System</h1>
+                <p class="proj-hero-sub">
+                    A console-based Python application developed to manage movie listings, showtime selection,
+                    and ticket booking with robust data structure management — led from concept to completion.
+                </p>
+                <div class="proj-meta-row">
+                    <span class="proj-meta-pill"><i class="fas fa-calendar-days"></i> Sep 2024 – Oct 2024</span>
+                    <span class="proj-meta-pill"><i class="fas fa-crown"></i> Team Leader</span>
+                    <span class="proj-meta-pill"><i class="fas fa-terminal"></i> Console Application</span>
+                    <span class="proj-meta-pill"><i class="fab fa-python"></i> Python 3</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Stats Bar ── -->
+        <div class="stats-bar">
+            <div class="container">
+                <div class="stats-inner">
+                    <div class="stat-block">
+                        <div class="stat-num">4</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">6</div>
+                        <div class="stat-label">Core Features</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">~2</div>
+                        <div class="stat-label">Months Duration</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">1st</div>
+                        <div class="stat-label">Year Python Project</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Role & Overview ── -->
+        <section class="proj-section">
+            <div class="container glass reveal">
+                <p class="section-eyebrow">Role & Contribution</p>
+                <h2>Leading the Build</h2>
+                <div class="role-split">
+                    <div class="role-text">
+                        <p>
+                            As <strong>Team Leader</strong>, I was responsible for driving the entire project lifecycle
+                            —
+                            from initial planning and task delegation to final integration and testing. I ensured that
+                            every team member had clear goals and deadlines while maintaining overall code quality.
+                        </p>
+                        <p>
+                            I personally implemented the core booking logic and data structure management using
+                            Python lists and dictionaries recursively to handle user records and movie data.
+                        </p>
+                        <div class="role-tags">
+                            <span class="role-tag"><i class="fas fa-crown"></i> Team Leader</span>
+                            <span class="role-tag"><i class="fas fa-code"></i> Core Dev</span>
+                            <span class="role-tag"><i class="fas fa-sitemap"></i> Architecture</span>
+                        </div>
+                    </div>
+                    <div class="responsibility-list">
+                        <div class="resp-item">
+                            <div class="resp-icon"><i class="fas fa-users-gear"></i></div>
+                            <div>
+                                <h4>Team Coordination</h4>
+                                <p>Assigned tasks, tracked progress, and ensured all modules integrated properly.</p>
+                            </div>
+                        </div>
+                        <div class="resp-item">
+                            <div class="resp-icon"><i class="fas fa-database"></i></div>
+                            <div>
+                                <h4>Data Structure Design</h4>
+                                <p>Designed recursive data structures using lists and dictionaries to manage records.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="resp-item">
+                            <div class="resp-icon"><i class="fas fa-ticket"></i></div>
+                            <div>
+                                <h4>Booking Logic</h4>
+                                <p>Implemented the full ticket booking system including seat availability tracking.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Terminal Demo ── -->
+        <section class="proj-section" style="padding-top:0;">
+            <div class="container">
+                <div class="reveal">
+                    <p class="section-eyebrow">Interactive Preview</p>
+                    <h2 style="margin-bottom:36px;">See It in Action</h2>
+                </div>
+                <div class="terminal-wrapper reveal">
+                    <div class="terminal-topbar">
+                        <div class="dot r"></div>
+                        <div class="dot y"></div>
+                        <div class="dot g"></div>
+                        <span class="terminal-fname">movie_theater.py — python3</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-output"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Features ── -->
+        <section class="proj-section">
+            <div class="container glass reveal">
+                <p class="section-eyebrow">Functionality</p>
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-film"></i></div>
+                        <h3>Movie Management</h3>
+                        <p>Add, update, and display available movies with titles, genres, and showtimes in real time.
+                        </p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-clock"></i></div>
+                        <h3>Showtime Selection</h3>
+                        <p>Browse available showtimes and select a preferred screening slot for any listed movie.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-ticket"></i></div>
+                        <h3>Ticket Booking</h3>
+                        <p>Book tickets for a selected movie and showtime with live seat availability tracking.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-list-check"></i></div>
+                        <h3>Listings Display</h3>
+                        <p>View all currently available movies sorted by showtime with seat and status info.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-shield-halved"></i></div>
+                        <h3>Input Validation</h3>
+                        <p>Robust error handling and input validation ensure smooth and crash-free interactions.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-database"></i></div>
+                        <h3>Recursive Data Structures</h3>
+                        <p>Efficiently manages all records using Python lists and dictionaries recursively.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Tech Stack ── -->
+        <section class="proj-section" style="padding-top:0;">
+            <div class="container glass reveal">
+                <p class="section-eyebrow">Technologies Used</p>
+                <h2>Tech Stack</h2>
+                <div class="stack-wrap">
+                    <div class="stack-pill"><i class="fab fa-python"></i> Python 3</div>
+                    <div class="stack-pill"><i class="fas fa-list"></i> Lists & Dictionaries</div>
+                    <div class="stack-pill"><i class="fas fa-rotate"></i> Loops & Conditionals</div>
+                    <div class="stack-pill"><i class="fas fa-puzzle-piece"></i> Modular Functions</div>
+                    <div class="stack-pill"><i class="fas fa-terminal"></i> Console I/O</div>
+                    <div class="stack-pill"><i class="fas fa-sitemap"></i> Recursion</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Chleo Jae G. Marimla. All rights reserved. &bull; Cybersecurity Portfolio</p>
+        </div>
+    </footer>
+
+    <script>
+        // ── Terminal Typewriter ──
+        const lines = [
+            { t: '=========================================', c: 't-d' },
+            { t: '   🎬  MOVIE THEATER MANAGEMENT SYSTEM  ', c: 't-c' },
+            { t: '=========================================', c: 't-d' },
+            { t: '', c: '' },
+            { t: '[1] View all movies', c: '' },
+            { t: '[2] Book a ticket', c: '' },
+            { t: '[3] Add a new movie', c: '' },
+            { t: '[4] Exit', c: '' },
+            { t: '', c: '' },
+            { t: 'Enter your choice: 1', c: 't-g' },
+            { t: '', c: '' },
+            { t: '--- Available Movies ---', c: 't-y' },
+            { t: '', c: '' },
+            { t: '  #   Title                    Showtime     Seats', c: 't-d' },
+            { t: '  1   Avengers: Endgame         10:00 AM     42/100', c: 't-g' },
+            { t: '  2   Spider-Man: No Way Home   01:30 PM     78/100', c: 't-g' },
+            { t: '  3   Interstellar              04:00 PM     15/100', c: 't-r' },
+            { t: '  4   Inception                 07:30 PM     90/100', c: 't-g' },
+            { t: '', c: '' },
+            { t: 'Enter your choice: 2', c: 't-g' },
+            { t: '', c: '' },
+            { t: 'Select a movie (1-4): 4', c: '' },
+            { t: 'Enter number of tickets: 2', c: '' },
+            { t: '', c: '' },
+            { t: '✓ Booking Confirmed!', c: 't-g' },
+            { t: '  Movie    : Inception (07:30 PM)', c: 't-m' },
+            { t: '  Tickets  : 2', c: 't-m' },
+            { t: '  Seats    : 88 / 100 remaining', c: 't-m' },
+            { t: '', c: '' },
+        ];
+
+        const out = document.getElementById('terminal-output');
+        let li = 0, ci = 0, cur = null;
+
+        function nextLine() {
+            if (li >= lines.length) {
+                const c = document.createElement('span');
+                c.className = 'cursor';
+                out.appendChild(c);
+                return;
+            }
+            const { t, c } = lines[li];
+            cur = document.createElement('div');
+            if (c) cur.className = c;
+            out.appendChild(cur);
+            ci = 0;
+            typeChar(t, c);
+        }
+
+        function typeChar(t, c) {
+            if (ci < t.length) {
+                cur.textContent += t[ci++];
+                out.scrollTop = out.scrollHeight;
+                setTimeout(() => typeChar(t, c), c === 't-g' ? 55 : 10);
+            } else {
+                li++;
+                setTimeout(nextLine, c === 't-g' ? 450 : 35);
+            }
+        }
+
+        setTimeout(nextLine, 700);
+
+        // ── Scroll Reveal ──
+        const reveals = document.querySelectorAll('.reveal');
+        const stats = document.querySelectorAll('.stat-block');
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        reveals.forEach(el => io.observe(el));
+        stats.forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.1}s`;
+            io.observe(el);
+        });
+    </script>
+</body>
+
+</html>

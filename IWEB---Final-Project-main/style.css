@@ -1,0 +1,1821 @@
+/*
+=====================================================
+ GalaCy Plaza: Azure Velocity Design (Final)
+=====================================================
+*/
+
+/* -------------------- 1. Variables & Base Reset -------------------- */
+:root {
+    /* Color Palette: Sapphire Blue & High-Vis Orange */
+    --color-sapphire: #003366;       /* Deep Blue (Primary) */
+    --color-orange: #FF6600;         /* High-Vis Orange (Accent) */
+    --color-charcoal: #222222;       /* Text, Dark Neutral */
+    --color-light-bg: #F8F9FA;       /* Light Gray/Off-White */
+    --color-white: #ffffff;
+    /* NEW BLUE FOR TESTIMONIALS - Using a lighter version of Sapphire for contrast */
+    --color-azure-bg: #E6F0FF;
+
+    /* Typography */
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+
+    /* Spacing & Effects */
+    --section-padding: 90px;
+    --border-radius: 8px;
+    --shadow-pro: 0 10px 30px rgba(0, 51, 102, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-body);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--color-white);
+    color: var(--color-charcoal);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-sapphire);
+    transition: color 0.3s ease;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--color-sapphire);
+    font-weight: 700;
+}
+
+/* MODIFICATION START: H2 Gradient Underline */
+
+/* Apply to all h2 elements that don't have a specific styling class (like in split sections) */
+h2 {
+    position: relative;
+}
+
+h2::after {
+    /* Base style for the underline beneath all h2 elements */
+    content: "";
+    display: block;
+    width: 60px; /* Slightly shorter than section-title for internal headers */
+    height: 4px;
+    /* Use the hero section's gradient style */
+    background: linear-gradient(to right, var(--color-orange), var(--color-sapphire));
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+/* Consistent Section Title Design - Override for centered titles */
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    /* Use the hero section's gradient style, but centered */
+    background: linear-gradient(to right, var(--color-orange), var(--color-sapphire));
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* Reset the underline for the H2 inside the contact info block, as it looks better without it given the layout */
+.contact-info-block h2::after {
+    display: none;
+}
+
+/* MODIFICATION END: H2 Gradient Underline */
+
+
+.section-padding {
+    padding: var(--section-padding) 80px;
+}
+
+/* -------------------- 2. Header and Navigation -------------------- */
+header {
+    background: var(--color-sapphire);
+    color: var(--color-white);
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 80px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+    /* filter: brightness(0) invert(1); UNCOMMENT if logo needs to be forced white */
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-link {
+    color: var(--color-white);
+    font-weight: 500;
+    padding: 10px 0;
+    position: relative;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: var(--color-orange);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--color-orange);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 6px;
+    padding: 5px;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--color-white);
+    border-radius: 5px;
+}
+
+/* -------------------- 3. Hero Section -------------------- */
+.hero {
+    background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 0, 0, 0.7)),
+        url("hero.jpg") center/cover no-repeat fixed;
+    color: var(--color-white);
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Page-specific Hero for inner pages (About, Services, Contact) */
+.page-hero {
+    background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.6)),
+        url("hiro.jpg") center/cover no-repeat; /* Use abtt.png from about.html as generic dark background */
+    color: var(--color-white);
+    height: 80vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.page-hero h1 {
+    font-size: 3.5rem;
+    color: var(--color-white);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.page-hero .hero-content p {
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+.hero-content h4 {
+    font-weight: 400;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--color-orange);
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--color-white);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ORIGINAL HERO UNDERLINE STYLE */
+.underline {
+    width: 150px;
+    height: 5px;
+    background: linear-gradient(to right, var(--color-orange), var(--color-sapphire));
+    margin: 25px auto 35px;
+    border-radius: 5px;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+}
+
+/* Global Primary Button Style */
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-orange);
+    color: var(--color-white);
+    font-weight: 700;
+    padding: 15px 35px;
+    border: 2px solid var(--color-orange);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
+}
+
+.primary-btn:hover {
+    background: var(--color-sapphire);
+    border-color: var(--color-sapphire);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 51, 102, 0.4);
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+}
+
+/* Secondary Button Style (for light backgrounds) */
+.secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    color: var(--color-sapphire);
+    border: 2px solid var(--color-sapphire);
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background: var(--color-sapphire);
+    color: var(--color-white);
+    box-shadow: var(--shadow-pro);
+}
+
+
+/* -------------------- 4. Trusted Partners Section -------------------- */
+.partners {
+    background: var(--color-light-bg);
+}
+
+.partners-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    flex-wrap: wrap;
+    padding: 40px;
+    background: var(--color-white);
+    border-radius: var(--border-radius);
+    /* MODIFICATION 1: Add shadow to partners-logos */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.partners-logos img {
+    /* MODIFICATION 2: Make partner images bigger */
+    height: 125px; /* Increased from 105px to 125px */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.partners-logos img:hover {
+    transform: scale(1.1);
+}
+
+/* -------------------- 5. Experience Section (Cards) -------------------- */
+.experience {
+    background: var(--color-white);
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    width: 31%;
+    min-width: 280px;
+    background: var(--color-light-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 5px solid var(--color-orange);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 51, 102, 0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 25px 20px 30px;
+}
+
+.card h3 {
+    margin: 0 0 10px;
+    font-size: 1.3rem;
+}
+
+.card p {
+    color: #555;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.card-link {
+    font-weight: 500;
+    color: var(--color-orange);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+/* -------------------- 6. Split Sections (About & Success) -------------------- */
+.section-split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+/* General Content Areas */
+.split-content {
+  flex: 1 1 50%;
+  padding: 80px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* NEW ADDITION: Enhanced styling for split-content blocks (e.g., in About section) */
+.split-content-card {
+    background: var(--color-white); /* Use white background to contrast with the section's default background */
+    padding: 30px; /* Add internal padding */
+    border-radius: var(--border-radius);
+    /* Use a light, subtle shadow for definition */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
+    height: 100%; /* Ensure it fills the height of the container */
+    display: flex; /* Use flex to organize the inner h3/p blocks neatly */
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ensure text inside this card is still readable */
+.split-content-card h3 {
+    margin-top: 15px; /* Add some space above the second h3 */
+    font-size: 1.5rem;
+    color: var(--color-sapphire);
+}
+
+.split-content-card h3:first-child {
+    margin-top: 0;
+}
+
+/* Image Containers */
+.split-image-container{
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.split-image-container img {
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.3s ease;
+  border-radius: 0;
+}
+
+.split-image-container img:hover {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+/* In style.css, around line 349: */
+.package-deal-card .image-box {
+  width: 70%;
+  height: 130px; 
+  background: #e9f2fb;
+  border-radius: 10px;
+  overflow: hidden; /* <--- ENSURE THIS IS PRESENT */
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.package-deal-card .image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* <-- This rule forces the image to fit the boundaries */
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* ABOUT SECTION LAYOUT (Original complex styles - kept for reference but not used in fixed HTML) */
+.about {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+  padding: 80px 5%;
+  background: var(--color-white);
+}
+
+/* LEFT: Image with Blue Background */
+.about-left {
+  flex: 1 1 45%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-bg {
+  background: var(--color-sapphire);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 45%;
+  height: 35%;
+  border-radius: 16px;
+  z-index: -1;
+}
+
+.image-container {
+  position: relative;
+  z-index: 2;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 51, 102, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 480px;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.image-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(0, 51, 102, 0.25);
+}
+
+/* RIGHT: Text Content */
+.about-right {
+  flex: 1 1 50%;
+  background: var(--color-white);
+}
+
+.about-right h2 {
+  font-size: 2.3rem;
+  margin-bottom: 25px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--color-sapphire);
+}
+
+.about-right p {
+  margin-bottom: 25px;
+  line-height: 1.8;
+  color: #444;
+  text-align: justify;
+}
+
+/* RESPONSIVE FIX */
+@media (max-width: 900px) {
+  .about {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-left, .about-right {
+    flex: 1 1 100%;
+  }
+
+  .image-bg {
+    width: 30%;
+    height: 90%;
+  }
+
+  .about-right p {
+    text-align: center;
+  }
+}
+
+
+/* Feature List */
+.features-list {
+  list-style: none;
+  margin: 30px 0 40px;
+  padding: 0;
+}
+
+.features-list li {
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+}
+
+.list-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 12px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+/* Responsive: Stack on Mobile */
+@media (max-width: 900px) {
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-left,
+  .about-right {
+    flex: 1 1 100%;
+  }
+
+  .image-bg {
+    display: none; /* hide the background box on small screens */
+  }
+
+  .image-container {
+    max-width: 90%;
+    margin: 0 auto 30px;
+  }
+}
+
+
+/* Success Section */
+.success {
+  background: var(--color-light-bg);
+}
+
+.success-left {
+  background: var(--color-sapphire);
+}
+
+.success-left img {
+  width: 100%;
+  max-height: 550px;
+  object-fit: cover;
+  opacity: 0.9;
+  padding: 40px 0;
+}
+
+.success-right {
+  background: var(--color-white);
+  color: #111;
+}
+
+.success-right h2 {
+  font-size: 2.4rem;
+  color: var(--color-orange);
+  margin-bottom: 20px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.success-right p {
+  margin-bottom: 30px;
+  color: #444;
+  line-height: 1.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .section-split {
+    flex-direction: column;
+  }
+
+  .split-content {
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .split-image-container img {
+    max-height: 400px;
+  }
+
+  .features-list li {
+    justify-content: center;
+  }
+
+  /* Adjust split-content-card for mobile */
+  .split-content-card {
+      padding: 25px; /* Slightly less padding on mobile */
+  }
+}
+
+@media (max-width: 600px) {
+  .split-content {
+    padding: 50px 25px;
+  }
+
+  .about-left h2,
+  .success-right h2 {
+    font-size: 2rem;
+  }
+}
+
+/* -------------------- 7. Media Queries Update for About Page (MERGED) -------------------- */
+
+@media (max-width: 1024px) {
+    /* History Section Adjustments (Merged from original separate block) */
+    .history-text {
+        padding: 60px 40px;
+    }
+
+    .history-image {
+        flex: 1 1 300px;
+    }
+
+    /* Redefining Spaces Adjustments (Merged from original separate block) */
+    .redefining-spaces {
+        padding: 70px 40px;
+    }
+
+    .redefining-spaces .text-content,
+    .redefining-spaces .image-container {
+        flex: 1 1 100%;
+        padding: 20px 0;
+    }
+
+    /* Mission/Vision Adjustments (Merged from original separate block) */
+    .mv-container {
+        max-width: 700px;
+    }
+
+    .mv-card {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Page Hero Adjustments (Merged from original separate block) */
+    .page-hero {
+        height: 40vh;
+    }
+
+    .page-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    /* Header adjustments */
+    header {
+        padding: 15px 20px;
+    }
+
+    #main-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 100%;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        background-color: var(--color-sapphire);
+        padding-top: 80px;
+        z-index:1000;
+        display: block;
+    }
+
+    #main-nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    #main-nav.show {
+        transform: translateX(0);
+    }
+
+    #main-nav li a {
+        display: block;
+        padding: 15px 30px;
+        color: var(--color-white);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #main-nav li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #main-nav a.active::after,
+    #main-nav a:hover::after {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    /* General section adjustments */
+    section {
+        padding: 60px 0;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    /* Split Section adjustments */
+    .section-split {
+        flex-direction: column;
+    }
+
+    .split-content {
+        padding: 40px 20px;
+        flex: 1 1 100%; /* Ensure full width on mobile */
+    }
+
+    .about-left, .success-right {
+        order: -1; /* Text content on top for better flow */
+    }
+
+    .about-right, .success-left {
+        order: 0;
+    }
+
+    .split-image-container {
+        height: 300px;
+    }
+
+    .history-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .history-text {
+        padding: 0;
+    }
+
+    .mv-container {
+        gap: 20px;
+    }
+
+    .mv-card {
+        flex: 1 1 100%;
+    }
+}
+
+
+/* END MODIFICATION */
+
+/* -------------------- 7. Testimonials Section -------------------- */
+.testimonials {
+    /* MODIFICATION 3: Change background of testimonials section to blue */
+    background: var(--color-azure-bg);
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial {
+    background: var(--color-light-bg);
+    border-radius: var(--border-radius);
+    padding: 30px 25px;
+    width: 30%;
+    min-width: 280px;
+    box-shadow: var(--shadow-pro);
+    transition: all 0.3s ease;
+    border-top: 5px solid var(--color-sapphire);
+}
+
+.testimonial:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+    border: 3px solid var(--color-orange);
+}
+
+.testimonial p {
+    font-style: italic;
+    color: #444;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.testimonial h4 {
+    color: var(--color-sapphire);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stars {
+    color: var(--color-orange);
+    font-size: 1.1rem;
+}
+
+/* -------------------- 8. Contact Section (Form) -------------------- */
+.contact-page-section {
+    padding: var(--section-padding) 80px;
+    background: var(--color-light-bg);
+}
+
+.contact-layout {
+    display: flex;
+    gap: 50px; 
+    /* KEY FIX: Reduced max-width for a more compact desktop area */
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.contact-info-block {
+    /* Info block is slightly larger to accommodate contact info */
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-info-block h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.contact-info-block p {
+    margin-bottom: 25px;
+    color: #555;
+}
+
+.contact-info-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-info-block li {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.contact-info-block li svg {
+    color: var(--color-orange);
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-right: 15px;
+    position: relative;
+    top: 2px;
+}
+
+.contact-info-block li a {
+    color: var(--color-charcoal);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.contact-form {
+    flex: 1;
+    min-width: 300px;
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-pro);
+    border-top: 5px solid var(--color-orange);
+}
+
+.contact-form h4 {
+    color: var(--color-sapphire);
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--color-sapphire);
+    font-size: 0.9rem;
+}
+
+.input-field,
+.textarea-field {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--color-charcoal);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus,
+.textarea-field:focus {
+    border-color: var(--color-orange);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
+}
+
+.textarea-field {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* -------------------- NEW STYLES FOR SERVICES PAGE (FIXED & ENHANCED) -------------------- */
+
+/* FIX: Centering the title and subtitle for package deals */
+.package-header-container {
+    text-align: center; /* This is the key property to center the h2 and p tags */
+    margin: 40px auto 20px; /* Top margin for spacing, auto horizontal margin for centering the container itself */
+    max-width: 800px; 
+}
+
+/* Ensure the underline remains centered if using the standard .section-title class */
+.package-header-container .section-title::after {
+    margin: 15px auto 0;
+}
+
+/* Generic container */
+.section-content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  background: #f3f7fb; /* Soft blue-gray background */
+  border-radius: 12px;
+}
+
+/* Main content box for each section */
+.service-content-box {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 51, 102, 0.1);
+  padding: 50px;
+  margin: 40px 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-content-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 51, 102, 0.15);
+}
+
+/* Service Layout Grid */
+.service-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .service-layout-grid {
+    grid-template-columns: 2fr 1fr; /* Main content + sidebar */
+    align-items: start;
+  }
+}
+/* =======================
+   💼 Package Deals Section
+======================= */
+.package-deals-container {
+  display: flex;
+  flex-wrap: nowrap; /* Keep in one line for desktop */
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 40px auto;
+  overflow-x: auto;
+  padding: 10px;
+  scroll-behavior: smooth;
+}
+
+.package-deal-card {
+  flex: 1 1 25%; /* Smaller width per card */
+  min-width: 250px; /* Keeps layout tight */
+  background: var(--color-white);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-pro);
+  text-align: center;
+  border-top: 4px solid var(--color-orange);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.package-deal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 51, 102, 0.15);
+}
+
+/* 🎯 Centered Image Box Inside Each Card (Smaller Now) */
+.package-deal-card .image-box {
+  width: 70%;
+  height: 130px; /* Smaller image box */
+  background: #e9f2fb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.package-deal-card .image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.package-deal-card .image-box img:hover {
+  transform: scale(1.05);
+}
+
+/* ✨ Text Content */
+.package-deal-card h4 {
+  color: var(--color-sapphire);
+  font-size: 1.1rem; /* Smaller font for cleaner layout */
+  margin-bottom: 8px;
+}
+
+.package-deal-card p {
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+  line-height: 1.4;
+}
+
+/* 📱 Responsive Layouts */
+@media (max-width: 1024px) {
+  .package-deals-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .package-deal-card {
+    flex: 1 1 20%;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .package-deal-card {
+    flex: 1 1 100%;
+    max-width: 480px;
+  }
+
+  .package-deal-card .image-box {
+    width: 60%;
+    height: 120px;
+  }
+}
+
+/*
+=============================================================
+ SERVICES PAGE STYLES (Additions for services.html structure)
+=============================================================
+*/
+
+/* 1. Split Section Enhancements (Commercial & Retail) */
+
+/* Specific styling for the alternate heading in the split sections */
+.section-title-alt {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--color-orange); /* Use accent color for high visibility */
+    text-transform: uppercase;
+}
+
+/* Suppress the standard H2 underline when using .section-title-alt */
+.section-title-alt::after {
+    display: none;
+}
+
+/* Styling for the list of features in the split sections */
+.features-list {
+    list-style: none;
+    margin: 30px 0 40px;
+    padding: 0;
+}
+
+.features-list li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 12px;
+    font-weight: 400;
+    color: var(--color-charcoal);
+    line-height: 1.5;
+}
+
+/* Custom bullet point (large orange dot) */
+.features-list li::before {
+    content: "\2022"; /* Large bullet point character */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-orange);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* 2. Event Packages Card Overrides (Focusing on Image/Title Overlay) */
+
+/* Container for the image and title - acts as a prominent header */
+.package-image-container {
+    /* Note: This rule overrides the less specific '.package-deal-card .image-box' 
+       if the browser applies specificity correctly. */
+    height: 180px; /* Fixed height for visual consistency */
+    overflow: hidden;
+    position: relative; 
+    background-color: var(--color-sapphire);
+    width: 100%; 
+    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Match card corners */
+}
+
+/* Image inside the container */
+.package-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8; /* Subtle dark overlay for text readability */
+}
+
+/* Title overlay for the image */
+.package-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    margin: 0;
+    padding: 0 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* Details area below the image */
+.package-details {
+    padding: 20px;
+    width: 100%;
+    text-align: left; /* Ensure text is left-aligned within the card */
+}
+
+.package-pax {
+    font-weight: 700;
+    color: var(--color-orange);
+    margin-bottom: 15px;
+    border-bottom: 1px dashed var(--color-light-gray-border);
+    padding-bottom: 10px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+}
+
+/* Styling for the list of inclusions */
+.package-inclusions {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: var(--color-charcoal);
+}
+
+/* Custom checkmark bullet */
+.package-inclusions li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.package-inclusions li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-sapphire); /* Use primary color for checkmark */
+    font-weight: bold;
+}
+
+/* Full width button in the package card */
+.package-cta {
+    width: 100%;
+    text-align: center;
+}
+
+/* 3. Responsive Adjustments (Ensures features lists look good on mobile) */
+@media (max-width: 900px) {
+    /* Keep the feature list left-aligned even if the parent content block is centered */
+    .split-content {
+        text-align: center;
+    }
+    
+    .features-list {
+        text-align: left; 
+        padding-left: 20px; /* Add some overall padding for smaller screens */
+        max-width: 450px; /* Optional: Constrain width for better readability */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .features-list li {
+        justify-content: flex-start;
+    }
+}
+
+/* ==========================
+   🏢 Commercial Leasing Section
+========================== */
+.commercial-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; /* Allows stacking on small screens */
+  gap: 40px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+/* 📸 Image Side */
+.commercial-image {
+  flex: 1 1 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.commercial-image img {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.commercial-image img:hover {
+  transform: scale(1.03);
+}
+
+/* 📋 Features Side */
+.commercial-content {
+  flex: 1 1 50%;
+}
+
+.commercial-content h3 {
+  font-size: 1.8rem;
+  color: var(--color-sapphire);
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+/* ✅ Features List */
+.commercial-features-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .commercial-features-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px;
+  background: #ffffff;
+  border-left: 4px solid var(--color-sapphire);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.feature-item:hover {
+  background: #f0f6ff;
+  transform: translateY(-3px);
+}
+
+.feature-icon {
+  color: var(--color-orange);
+  font-size: 1.8rem;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.feature-item h5 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: var(--color-sapphire);
+}
+
+.feature-item p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* 📱 Responsive Adjustments */
+@media (max-width: 900px) {
+  .commercial-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .commercial-content {
+    order: 2; /* Make text appear after image on small screens */
+    width: 100%;
+  }
+
+  .commercial-image {
+    order: 1;
+    width: 100%;
+  }
+
+  .commercial-content h3 {
+    text-align: center;
+  }
+
+  .commercial-features-list {
+    grid-template-columns: 1fr; /* Stack items on smaller screens */
+  }
+}
+
+
+/* -------------------- NEW STYLES FOR ABOUT PAGE INTEGRATION -------------------- */
+
+.history-section-split {
+    /* Uses .section-split as a base */
+    flex-direction: row-reverse; /* Reverse the image/content order for the history section */
+    background: var(--color-white);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.history-section-split .split-content {
+    background: var(--color-light-bg);
+}
+
+/* Mission & Vision Section */
+.mv-section {
+    background: var(--color-azure-bg); /* Use the lighter blue background */
+    text-align: center;
+}
+
+.mv-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mv-card {
+    flex: 1 1 45%;
+    min-width: 300px;
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-pro);
+    text-align: left;
+    border-top: 5px solid var(--color-orange);
+    transition: transform 0.3s ease;
+}
+
+.mv-card:hover {
+    transform: translateY(-5px);
+}
+
+.mv-card h3 {
+    font-size: 1.5rem;
+    color: var(--color-orange);
+    margin-bottom: 10px;
+}
+
+.mv-card p {
+    color: #555;
+}
+
+/* Redefining Spaces (Simple full-width content) */
+.redefining-spaces-section {
+    background: var(--color-white);
+    text-align: center;
+}
+
+.redefining-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.redefining-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin-top: 30px;
+    box-shadow: var(--shadow-pro);
+}
+
+
+/* -------------------- 9. Footer -------------------- */
+footer {
+    background: var(--color-charcoal);
+    color: var(--color-white);
+}
+
+.footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 80px;
+    gap: 40px;
+}
+
+.footer-col {
+    flex: 1 1 200px;
+}
+
+.footer-col h4 {
+    color: var(--color-orange);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: #bbb;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--color-white);
+}
+
+.footer-social h4 {
+    color: var(--color-orange);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icons img {
+    width: 50px;
+    height: 50px;
+    transition: filter 0.3s ease;
+}
+
+.social-icons a:hover img {
+    filter: invert(50%) sepia(90%) saturate(1000%) hue-rotate(360deg) brightness(100%) contrast(100%); /* Orange hover effect */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 80px;
+    border-top: 1px solid #333;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* -------------------- 10. Media Queries -------------------- */
+
+@media (max-width: 1200px) {
+    .section-padding,
+    header,
+    .footer-top {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .card {
+        width: 48%;
+    }
+}
+
+@media (max-width: 900px) {
+    /* Responsive Navigation */
+    nav ul {
+        /*display: none;*/
+        flex-direction: column;
+        position: absolute;
+        top: 75px; /* Height of the header */
+        left: 0;
+        width: 100%;
+        background: var(--color-sapphire);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        padding: 20px 0;
+        z-index: 999;
+    }
+
+    nav ul.show {
+        display: flex;
+    }
+
+    nav ul li {
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* General Layout */
+    .section-padding {
+        padding: 60px 40px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .hero {
+        height: 70vh;
+    }
+
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+
+    /* Split sections */
+    .section-split {
+        flex-direction: column;
+    }
+    /* About History split must stack */
+    .history-section-split {
+        flex-direction: column;
+    }
+
+    .split-content {
+        padding: 40px 40px 0;
+    }
+
+    .split-image-container {
+        flex: 1 1 300px;
+        height: 400px;
+    }
+
+    .about-right img,
+    .success-left img {
+        padding: 0;
+    }
+    
+    .partners-logos {
+        gap: 40px;
+    }
+    
+    .partners-logos img {
+        height: 80px;
+    }
+    
+    .contact-layout {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .contact-form {
+        padding: 30px;
+    }
+    
+    .contact-info-block {
+        text-align: center;
+        min-width: unset;
+    }
+
+    .contact-info-block ul {
+        max-width: 350px;
+        margin: 20px auto 0;
+    }
+
+    .contact-info-block li {
+        justify-content: center;
+        text-align: left;
+    }
+    
+    .footer-top {
+        flex-direction: column;
+        padding: 40px;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Page Hero Adjustments (Merged from original separate block) */
+    .page-hero {
+        height: 40vh;
+    }
+
+    .page-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .mv-card {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .section-padding {
+        padding: 40px 20px;
+    }
+
+    header {
+        padding: 10px 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .underline {
+        width: 100px;
+        margin: 15px auto 25px;
+    }
+
+    .card {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    .testimonial {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+/* -------------------- 7. Media Queries Update for About Page (MERGED) -------------------- */
+
+@media (max-width: 1024px) {
+    /* History Section Adjustments (Merged from original separate block) */
+    .history-text {
+        padding: 60px 40px;
+    }
+    
+    .history-image {
+        flex: 1 1 300px;
+    }
+
+    /* Redefining Spaces Adjustments (Merged from original separate block) */
+    .redefining-spaces {
+        padding: 70px 40px;
+    }
+
+    .redefining-spaces .text-content,
+    .redefining-spaces .image-container {
+        flex: 1 1 100%;
+        padding: 20px 0;
+    }
+
+    /* Mission/Vision Adjustments (Merged from original separate block) */
+    .mv-container {
+        max-width: 700px;
+    }
+    
+    .mv-card {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    /* In style.css, around line 349: */
+    .package-deal-card .image-box {
+        width: 70%;
+        height: 130px; 
+        background: #e9f2fb;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;    
+    }
+
+    .package-deal-card .image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+    
+}

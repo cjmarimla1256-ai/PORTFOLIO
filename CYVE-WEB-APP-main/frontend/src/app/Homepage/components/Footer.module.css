@@ -1,0 +1,158 @@
+.footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 4rem 0 0;
+    margin-top: auto;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.logoLetters {
+    display: flex;
+    align-items: baseline;
+    gap: 0.1em;
+    font-family: var(--font-family-primary);
+    font-weight: 400;
+    color: #f5be1e;
+    line-height: 1;
+}
+
+.letterC {
+    font-size: 160px;
+    line-height: 193.64px;
+}
+
+.letterY {
+    font-size: 96px;
+    line-height: 116.18px;
+}
+
+.letterV {
+    font-size: 96px;
+    line-height: 116.18px;
+}
+
+.letterE {
+    font-size: 96px;
+    line-height: 116.18px;
+}
+
+.linksColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.linksHeading {
+    font-family: var(--font-family-primary);
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0 0 0.25rem;
+}
+
+.linksColumn a {
+    font-size: 24px;
+    color: #ffffff;
+    transition: color var(--transition-fast);
+}
+
+.linksColumn a:hover {
+    color: #f5be1e;
+}
+
+.contactInfo {
+    font-family: var(--font-family-primary);
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0;
+}
+
+.bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2rem 4rem;
+    text-align: center;
+}
+
+.copyright {
+    font-family: var(--font-family-primary);
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 2rem 2rem;
+    }
+
+    .letterC {
+        font-size: 5rem;
+        line-height: 1;
+    }
+
+    .letterY,
+    .letterV,
+    .letterE {
+        font-size: 3rem;
+        line-height: 1;
+    }
+
+    .bottom {
+        padding: 1.5rem 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding: 0 1rem 2rem;
+        gap: 2rem;
+    }
+
+    .logoLetters {
+        justify-content: center;
+    }
+
+    .letterC {
+        font-size: 4rem;
+    }
+
+    .letterY,
+    .letterV,
+    .letterE {
+        font-size: 2.5rem;
+    }
+
+    .linksHeading,
+    .linksColumn a,
+    .contactInfo {
+        font-size: 1.125rem;
+    }
+
+    .bottom {
+        padding: 1.5rem 1rem;
+    }
+
+    .copyright {
+        font-size: 1rem;
+    }
+}

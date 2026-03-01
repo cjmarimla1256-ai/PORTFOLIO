@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Interactive Lesson Planner | Chleo's Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Interactive Lesson Planner for Educators — A Java project by Chleo Jae G. Marimla, Associate Leader.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        :root {
+            --accent: #00d4a8;
+            --accent-dim: rgba(0, 212, 168, 0.12);
+            --accent-glow: rgba(0, 212, 168, 0.3);
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .proj-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 80% 20%, rgba(0, 212, 168, 0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 20% 80%, rgba(112, 0, 255, 0.09) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        .hero-grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+        }
+
+        .proj-hero .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 140px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: var(--transition);
+            margin-bottom: 48px;
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 50px;
+        }
+
+        .back-link:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .proj-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent-glow);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 28px;
+        }
+
+        .proj-hero h1 {
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            background: linear-gradient(150deg, #ffffff 40%, #909099);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 800px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .proj-hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.15s backwards;
+        }
+
+        .proj-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            animation: fadeInUp 0.8s ease-out 0.25s backwards;
+        }
+
+        .proj-meta-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 9px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .proj-meta-pill i {
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        /* ── Stats Bar ── */
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 40px 0;
+        }
+
+        .stats-inner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .stat-block {
+            text-align: center;
+            padding: 20px;
+            border-right: 1px solid var(--glass-border);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .stat-block:last-child {
+            border-right: none;
+        }
+
+        .stat-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ── Section Commons ── */
+        .proj-section {
+            padding: 100px 0;
+        }
+
+        .section-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .proj-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .proj-section h2::after {
+            display: none;
+        }
+
+        /* ── Role Split ── */
+        .role-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .role-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .role-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .role-tag {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent-glow);
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .responsibility-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .resp-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .resp-item:hover {
+            border-color: var(--accent-glow);
+            background: var(--accent-dim);
+        }
+
+        .resp-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .resp-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .resp-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ── Planner App Mockup ── */
+        .planner-app {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        .planner-topbar {
+            background: #181a22;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.r {
+            background: #ff5f57;
+        }
+
+        .dot.y {
+            background: #febc2e;
+        }
+
+        .dot.g {
+            background: #28c840;
+        }
+
+        .topbar-title {
+            margin-left: 14px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .planner-body {
+            display: grid;
+            grid-template-columns: 230px 1fr;
+            min-height: 580px;
+            background: #0c0e13;
+        }
+
+        .pl-sidebar {
+            background: #10121a;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 0;
+        }
+
+        .pl-sidebar-head {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.22);
+            padding: 0 18px 14px;
+        }
+
+        .pl-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 18px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .pl-nav-item:hover {
+            color: #fff;
+            background: rgba(0, 212, 168, 0.05);
+        }
+
+        .pl-nav-item.active {
+            color: #fff;
+            background: rgba(0, 212, 168, 0.08);
+            border-left-color: var(--accent);
+        }
+
+        .pl-nav-item i {
+            width: 16px;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .pl-main {
+            padding: 28px;
+            overflow-y: auto;
+        }
+
+        .pl-pane-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .pl-pane-title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .pl-btn-add {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 9px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .pl-btn-add:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+
+        .lesson-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lesson-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            cursor: pointer;
+            transition: all 0.22s;
+        }
+
+        .lesson-row:hover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .lesson-row.done {
+            opacity: 0.5;
+        }
+
+        .lesson-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: var(--accent);
+        }
+
+        .lesson-row.done .lesson-check {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-info h4 {
+            font-size: 0.88rem;
+            margin-bottom: 3px;
+        }
+
+        .lesson-info p {
+            font-size: 0.76rem;
+            color: rgba(255, 255, 255, 0.38);
+        }
+
+        .l-tag {
+            font-size: 0.68rem;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .t-blue {
+            background: rgba(0, 80, 255, 0.15);
+            color: #79c0ff;
+        }
+
+        .t-green {
+            background: rgba(0, 255, 120, 0.12);
+            color: #56d364;
+        }
+
+        .t-org {
+            background: rgba(255, 160, 0, 0.15);
+            color: #e3b341;
+        }
+
+        .t-pur {
+            background: rgba(160, 80, 255, 0.15);
+            color: #d2a8ff;
+        }
+
+        /* hidden tabs */
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Progress bars */
+        .prog-row {
+            margin-bottom: 20px;
+        }
+
+        .prog-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.83rem;
+            margin-bottom: 6px;
+        }
+
+        .prog-track {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 50px;
+            height: 8px;
+        }
+
+        .prog-fill {
+            border-radius: 50px;
+            height: 8px;
+        }
+
+        /* Schedule table */
+        .pl-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .pl-table th {
+            text-align: left;
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.32);
+            font-weight: 600;
+        }
+
+        .pl-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .pl-table .time-col {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* ── Features Grid ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .feat-card {
+            padding: 28px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feat-card:hover {
+            border-color: var(--accent-glow);
+            transform: translateY(-6px);
+            background: var(--accent-dim);
+        }
+
+        .feat-card:hover::before {
+            opacity: 1;
+        }
+
+        .feat-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        .feat-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .feat-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ── Stack Pills ── */
+        .stack-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .stack-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .stack-pill:hover {
+            border-color: var(--accent-glow);
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .stack-pill i {
+            color: var(--accent);
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .role-split {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-block:nth-child(2) {
+                border-right: none;
+            }
+
+            .planner-body {
+                grid-template-columns: 1fr;
+            }
+
+            .pl-sidebar {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo"><a href="index.html">Chleo</a></div>
+            <nav>
+                <a href="index.html#about">About</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ── Hero ── -->
+        <section class="proj-hero">
+            <div class="hero-bg"></div>
+            <div class="hero-grid-lines"></div>
+            <div class="container">
+                <a href="index.html#projects" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+                <div class="proj-eyebrow">
+                    <i class="fas fa-mug-hot"></i> Java Project
+                </div>
+                <h1>Interactive Lesson Planner<br>for Educators</h1>
+                <p class="proj-hero-sub">
+                    A dynamic lesson planning application built in Java that empowers educators to organize,
+                    schedule, and track their course content — from lesson creation to student progress monitoring.
+                </p>
+                <div class="proj-meta-row">
+                    <span class="proj-meta-pill"><i class="fas fa-calendar-days"></i> Aug 2025 – Oct 2025</span>
+                    <span class="proj-meta-pill"><i class="fas fa-star-half-stroke"></i> Associate Leader</span>
+                    <span class="proj-meta-pill"><i class="fas fa-chalkboard-user"></i> Education Tool</span>
+                    <span class="proj-meta-pill"><i class="fas fa-mug-hot"></i> Java</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Stats Bar ── -->
+        <div class="stats-bar">
+            <div class="container">
+                <div class="stats-inner">
+                    <div class="stat-block">
+                        <div class="stat-num">5+</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">5</div>
+                        <div class="stat-label">Core Modules</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">~3</div>
+                        <div class="stat-label">Months Duration</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-num">Java</div>
+                        <div class="stat-label">Primary Language</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Role & Overview ── -->
+        <section class="proj-section">
+            <div class="container glass reveal">
+                <p class="section-eyebrow">Role & Contribution</p>
+                <h2>Driving Collaboration</h2>
+                <div class="role-split">
+                    <div class="role-text">
+                        <p>
+                            As <strong>Associate Leader</strong>, I served as the bridge between the team and project
+                            goals — aligning tasks, resolving conflicts, and making sure we stayed on schedule. My focus
+                            was on keeping communication clear and momentum high throughout development.
+                        </p>
+                        <p>
+                            I also contributed directly to core module development, particularly the scheduling and
+                            progress tracking components, while supporting team members in debugging and integration.
+                        </p>
+                        <div class="role-tags">
+                            <span class="role-tag"><i class="fas fa-star-half-stroke"></i> Associate Leader</span>
+                            <span class="role-tag"><i class="fas fa-handshake"></i> Coordination</span>
+                            <span class="role-tag"><i class="fas fa-code"></i> Module Dev</span>
+                        </div>
+                    </div>
+                    <div class="responsibility-list">
+                        <div class="resp-item">
+                            <div class="resp-icon"><i class="fas fa-people-arrows"></i></div>
+                            <div>
+                                <h4>Stakeholder Alignment</h4>
+                                <p>Unified team goals and ensured consistent communication across all members.</p>
+                            </div>
+                        </div>
+                        <div class="resp-item">
+                            <div class="resp-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div>
+                                <h4>Deadline Management</h4>
+                                <p>Managed high-priority tasks and resolved scheduling conflicts to hit milestones.</p>
+                            </div>
+                        </div>
+                        <div class="resp-item">
+                            <div class="resp-icon"><i class="fas fa-chart-bar"></i></div>
+                            <div>
+                                <h4>Progress Tracking Module</h4>
+                                <p>Contributed to building the progress reports and curriculum visualizations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── App Demo ── -->
+        <section class="proj-section" style="padding-top:0;">
+            <div class="container">
+                <div class="reveal">
+                    <p class="section-eyebrow">Interactive Preview</p>
+                    <h2 style="margin-bottom:36px;">Application Walkthrough</h2>
+                </div>
+                <div class="planner-app reveal">
+                    <div class="planner-topbar">
+                        <div class="dot r"></div>
+                        <div class="dot y"></div>
+                        <div class="dot g"></div>
+                        <span class="topbar-title">Lesson Planner — Educator Dashboard</span>
+                    </div>
+                    <div class="planner-body">
+                        <!-- Sidebar -->
+                        <div class="pl-sidebar">
+                            <div class="pl-sidebar-head">Navigation</div>
+                            <div class="pl-nav-item active" onclick="showTab('lessons', this)"><i
+                                    class="fas fa-book-open"></i> Lesson Plans</div>
+                            <div class="pl-nav-item" onclick="showTab('schedule', this)"><i
+                                    class="fas fa-calendar-days"></i> Schedule</div>
+                            <div class="pl-nav-item" onclick="showTab('students', this)"><i
+                                    class="fas fa-user-graduate"></i> Students</div>
+                            <div class="pl-nav-item" onclick="showTab('progress', this)"><i
+                                    class="fas fa-chart-bar"></i> Progress</div>
+                            <div class="pl-nav-item" onclick="showTab('resources', this)"><i
+                                    class="fas fa-folder-open"></i> Resources</div>
+                        </div>
+
+                        <!-- Main Pane -->
+                        <div class="pl-main">
+
+                            <!-- Lessons Tab -->
+                            <div id="tab-lessons" class="tab-pane active">
+                                <div class="pl-pane-header">
+                                    <span class="pl-pane-title">📚 Lesson Plans</span>
+                                    <button class="pl-btn-add" onclick="addLesson()"><i class="fas fa-plus"></i> Add
+                                        Lesson</button>
+                                </div>
+                                <div class="lesson-list" id="lessons-list"></div>
+                            </div>
+
+                            <!-- Schedule Tab -->
+                            <div id="tab-schedule" class="tab-pane">
+                                <div class="pl-pane-header"><span class="pl-pane-title">📅 Weekly Schedule</span></div>
+                                <table class="pl-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Monday</th>
+                                            <th>Wednesday</th>
+                                            <th>Friday</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="time-col">07:00 AM</td>
+                                            <td><span class="l-tag t-blue">Intro to OOP</span></td>
+                                            <td><span class="l-tag t-green">Data Structures</span></td>
+                                            <td><span class="l-tag t-blue">Intro to OOP</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="time-col">09:00 AM</td>
+                                            <td><span class="l-tag t-org">Algorithms</span></td>
+                                            <td>—</td>
+                                            <td><span class="l-tag t-pur">Design Patterns</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="time-col">01:00 PM</td>
+                                            <td>—</td>
+                                            <td><span class="l-tag t-pur">Design Patterns</span></td>
+                                            <td><span class="l-tag t-org">Algorithms</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Students Tab -->
+                            <div id="tab-students" class="tab-pane">
+                                <div class="pl-pane-header"><span class="pl-pane-title">🎓 Student Overview</span></div>
+                                <div class="lesson-list">
+                                    <div class="lesson-row done">
+                                        <div class="lesson-check"><i class="fas fa-check"></i></div>
+                                        <div class="lesson-info">
+                                            <h4>Maria Santos</h4>
+                                            <p>Completed 8 of 10 modules</p>
+                                        </div>
+                                        <span class="l-tag t-green">80%</span>
+                                    </div>
+                                    <div class="lesson-row done">
+                                        <div class="lesson-check"><i class="fas fa-check"></i></div>
+                                        <div class="lesson-info">
+                                            <h4>Juan dela Cruz</h4>
+                                            <p>Completed 6 of 10 modules</p>
+                                        </div>
+                                        <span class="l-tag t-org">60%</span>
+                                    </div>
+                                    <div class="lesson-row done">
+                                        <div class="lesson-check"><i class="fas fa-check"></i></div>
+                                        <div class="lesson-info">
+                                            <h4>Ana Reyes</h4>
+                                            <p>Completed 10 of 10 modules</p>
+                                        </div>
+                                        <span class="l-tag t-blue">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Tab -->
+                            <div id="tab-progress" class="tab-pane">
+                                <div class="pl-pane-header"><span class="pl-pane-title">📊 Progress Overview</span>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.87rem;margin-bottom:24px;">Track your
+                                    curriculum completion status below.</p>
+                                <div class="prog-row">
+                                    <div class="prog-label"><span>Introduction to OOP</span><span
+                                            style="color:var(--accent)">90%</span></div>
+                                    <div class="prog-track">
+                                        <div class="prog-fill" style="width:90%;background:var(--accent)"></div>
+                                    </div>
+                                </div>
+                                <div class="prog-row">
+                                    <div class="prog-label"><span>Data Structures</span><span
+                                            style="color:#79c0ff">65%</span></div>
+                                    <div class="prog-track">
+                                        <div class="prog-fill" style="width:65%;background:#79c0ff"></div>
+                                    </div>
+                                </div>
+                                <div class="prog-row">
+                                    <div class="prog-label"><span>Algorithms</span><span
+                                            style="color:#e3b341">40%</span></div>
+                                    <div class="prog-track">
+                                        <div class="prog-fill" style="width:40%;background:#e3b341"></div>
+                                    </div>
+                                </div>
+                                <div class="prog-row">
+                                    <div class="prog-label"><span>Design Patterns</span><span
+                                            style="color:#d2a8ff">20%</span></div>
+                                    <div class="prog-track">
+                                        <div class="prog-fill" style="width:20%;background:#d2a8ff"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Resources Tab -->
+                            <div id="tab-resources" class="tab-pane">
+                                <div class="pl-pane-header"><span class="pl-pane-title">📁 Resources</span></div>
+                                <div class="lesson-list">
+                                    <div class="lesson-row">
+                                        <div class="lesson-check"
+                                            style="border:none;background:var(--accent-dim);color:var(--accent);border-radius:8px;">
+                                            <i class="fas fa-file-pdf"></i></div>
+                                        <div class="lesson-info">
+                                            <h4>OOP Lecture Notes.pdf</h4>
+                                            <p>Uploaded Feb 10, 2025</p>
+                                        </div>
+                                        <span class="l-tag t-green">PDF</span>
+                                    </div>
+                                    <div class="lesson-row">
+                                        <div class="lesson-check"
+                                            style="border:none;background:var(--accent-dim);color:var(--accent);border-radius:8px;">
+                                            <i class="fas fa-file-code"></i></div>
+                                        <div class="lesson-info">
+                                            <h4>Data Structures.java</h4>
+                                            <p>Uploaded Mar 5, 2025</p>
+                                        </div>
+                                        <span class="l-tag t-blue">Code</span>
+                                    </div>
+                                    <div class="lesson-row">
+                                        <div class="lesson-check"
+                                            style="border:none;background:var(--accent-dim);color:var(--accent);border-radius:8px;">
+                                            <i class="fas fa-file-powerpoint"></i></div>
+                                        <div class="lesson-info">
+                                            <h4>Algorithms Slides.pptx</h4>
+                                            <p>Uploaded Mar 14, 2025</p>
+                                        </div>
+                                        <span class="l-tag t-org">Slides</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Features ── -->
+        <section class="proj-section">
+            <div class="container glass reveal">
+                <p class="section-eyebrow">Functionality</p>
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-book-open"></i></div>
+                        <h3>Lesson Management</h3>
+                        <p>Create, edit, and organize lessons with subjects, objectives, and completion tracking.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-calendar-days"></i></div>
+                        <h3>Schedule Builder</h3>
+                        <p>Build weekly schedules visually and assign lessons to specific time slots and days.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-user-graduate"></i></div>
+                        <h3>Student Tracking</h3>
+                        <p>Monitor individual student progress on assigned lessons and modules at a glance.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-chart-bar"></i></div>
+                        <h3>Progress Reports</h3>
+                        <p>Visual progress bars and dashboards to evaluate curriculum completion rates.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-folder-open"></i></div>
+                        <h3>Resource Library</h3>
+                        <p>Upload and organize supplementary materials like PDFs, code files, and slides.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon"><i class="fas fa-people-group"></i></div>
+                        <h3>Team Collaboration</h3>
+                        <p>Aligned stakeholders and cross-functional teams to meet deadlines and goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Tech Stack ── -->
+        <section class="proj-section" style="padding-top:0;">
+            <div class="container glass reveal">
+                <p class="section-eyebrow">Technologies Used</p>
+                <h2>Tech Stack</h2>
+                <div class="stack-wrap">
+                    <div class="stack-pill"><i class="fas fa-mug-hot"></i> Java</div>
+                    <div class="stack-pill"><i class="fas fa-layer-group"></i> OOP Principles</div>
+                    <div class="stack-pill"><i class="fas fa-sitemap"></i> MVC Pattern</div>
+                    <div class="stack-pill"><i class="fas fa-database"></i> File I/O</div>
+                    <div class="stack-pill"><i class="fas fa-window-restore"></i> Swing / JavaFX</div>
+                    <div class="stack-pill"><i class="fas fa-puzzle-piece"></i> Design Patterns</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Chleo Jae G. Marimla. All rights reserved. &bull; Cybersecurity Portfolio</p>
+        </div>
+    </footer>
+
+    <script>
+        // ── Lesson Data ──
+        const lessonsData = [
+            { title: 'Introduction to OOP', subject: 'Java Programming', tag: 't-blue', label: 'Lecture', done: true },
+            { title: 'Data Structures & Collections', subject: 'Java Programming', tag: 't-green', label: 'Lab', done: true },
+            { title: 'Algorithms & Complexity', subject: 'Computer Science', tag: 't-org', label: 'Lecture', done: false },
+            { title: 'Design Patterns in Java', subject: 'Advanced Programming', tag: 't-pur', label: 'Workshop', done: false },
+        ];
+
+        function renderLessons() {
+            const list = document.getElementById('lessons-list');
+            list.innerHTML = '';
+            lessonsData.forEach((l, i) => {
+                list.innerHTML += `
+                    <div class="lesson-row ${l.done ? 'done' : ''}" onclick="toggleLesson(${i})">
+                        <div class="lesson-check">${l.done ? '<i class="fas fa-check"></i>' : ''}</div>
+                        <div class="lesson-info">
+                            <h4>${l.title}</h4>
+                            <p>${l.subject}</p>
+                        </div>
+                        <span class="l-tag ${l.tag}">${l.label}</span>
+                    </div>`;
+            });
+        }
+
+        function toggleLesson(i) {
+            lessonsData[i].done = !lessonsData[i].done;
+            renderLessons();
+        }
+
+        function addLesson() {
+            lessonsData.push({
+                title: 'New Lesson ' + (lessonsData.length + 1),
+                subject: 'General',
+                tag: 't-blue',
+                label: 'Lecture',
+                done: false
+            });
+            renderLessons();
+        }
+
+        function showTab(id, el) {
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.pl-nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            if (el) el.classList.add('active');
+        }
+
+        renderLessons();
+
+        // ── Scroll Reveal ──
+        const reveals = document.querySelectorAll('.reveal');
+        const stats = document.querySelectorAll('.stat-block');
+
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        reveals.forEach(el => io.observe(el));
+        stats.forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.1}s`;
+            io.observe(el);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--color-black);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-base);
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logoImg {
+    height: 80px;
+    width: auto;
+    transition: all var(--transition-base);
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navLink {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all var(--transition-base);
+}
+
+.navLink.active {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+}
+
+.navLink:hover {
+    opacity: 0.8;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.authButtons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.profileLink {
+    font-size: 1rem;
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.profileLink:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-gold);
+}
+
+.btnLogin,
+.btnSignup,
+.btnLogout {
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid var(--color-gold);
+}
+
+.btnLogin {
+    background-color: transparent;
+    color: var(--color-gold);
+}
+
+.btnLogin:hover {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+    opacity: 1;
+}
+
+.btnSignup {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+}
+
+.btnSignup:hover {
+    background-color: transparent;
+    color: var(--color-gold);
+    opacity: 1;
+}
+
+.btnLogout {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btnLogout:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .container {
+        padding: 1.5rem 2rem;
+    }
+
+    .nav {
+        gap: 1.5rem;
+    }
+
+    .navLink {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 1rem 2rem;
+    }
+
+    .nav {
+        gap: 1.5rem;
+    }
+
+    .navLink {
+        font-size: 1rem;
+    }
+
+    .logoImg {
+        height: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .logoImg {
+        height: 60px;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 1rem;
+        background-color: rgba(0, 0, 0, 0.95);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+
+    .navLink {
+        font-size: 0.875rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .authButtons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .btnLogin,
+    .btnSignup,
+    .btnLogout {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+}
